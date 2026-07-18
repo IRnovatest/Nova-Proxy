@@ -76,7 +76,8 @@ app.add_middleware(
 
 # ── Static assets (panel HTML, logo, qrcode, manifest) ────────────────────────
 STATIC_DIR = Path(__file__).parent / "static"
-app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+if STATIC_DIR.is_dir():
+    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 async def load_state():
     global LINKS, AUTH, SUBS, panel_api_keys, totp_state, CUSTOM_PATHS, USERS, linked_panels, BLOCK_DOMAINS_ENABLED, BLOCK_ADS_ENABLED
